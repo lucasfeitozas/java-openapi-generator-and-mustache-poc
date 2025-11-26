@@ -1,0 +1,23 @@
+package {{packageName}};
+
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.filter.CommonsRequestLoggingFilter;
+
+@Configuration
+public class {{className}} {
+
+    @Bean
+    public FilterRegistrationBean<CommonsRequestLoggingFilter> commonsRequestLoggingFilter() {
+        CommonsRequestLoggingFilter filter = new CommonsRequestLoggingFilter();
+        filter.setIncludeHeaders({{includeHeaders}});
+        filter.setIncludeQueryString({{includeQueryString}});
+        filter.setIncludePayload({{includePayload}});
+        filter.setMaxPayloadLength({{maxPayloadLength}});
+        FilterRegistrationBean<CommonsRequestLoggingFilter> registrationBean = new FilterRegistrationBean<>();
+        registrationBean.setFilter(filter);
+        registrationBean.setOrder({{order}});
+        return registrationBean;
+    }
+}

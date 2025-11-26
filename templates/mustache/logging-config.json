@@ -1,0 +1,9 @@
+{
+  "packageName": "com.example.openapi.config",
+  "className": "RequestLoggingConfiguration",
+  "includeHeaders": true,
+  "includeQueryString": true,
+  "includePayload": true,
+  "maxPayloadLength": 10000,
+  "order": 1
+}

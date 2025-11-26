@@ -1,0 +1,103 @@
+openapi: 3.0.3
+info:
+  description: API de exemplo usada para demonstrar a geração de SDK/server stubs
+    usando Java 21
+  title: Greeting Service
+  version: 1.0.0
+servers:
+- description: Instância local do Spring Boot
+  url: http://localhost:8080
+tags:
+- description: Operações relacionadas a cumprimento
+  name: Greetings
+paths:
+  /greetings/{name}:
+    get:
+      operationId: getGreeting
+      parameters:
+      - description: Nome da pessoa
+        explode: false
+        in: path
+        name: name
+        required: true
+        schema:
+          type: string
+        style: simple
+      - description: "Título opcional (Dr., Ms., etc)"
+        explode: true
+        in: query
+        name: title
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetingResponse'
+          description: Saudação calculada
+        "404":
+          description: Não encontrado
+      summary: Recupera uma saudação personalizada
+      tags:
+      - Greetings
+      x-accepts:
+      - application/json
+  /greetings:
+    post:
+      operationId: createGreeting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GreetingRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetingResponse'
+          description: Saudação criada
+        "400":
+          description: Erro de validação
+      summary: Persiste uma saudação customizada
+      tags:
+      - Greetings
+      x-content-type: application/json
+      x-accepts:
+      - application/json
+components:
+  schemas:
+    GreetingRequest:
+      example:
+        language: pt-BR
+        message: "Olá, seja bem-vindo!"
+      properties:
+        message:
+          example: "Olá, seja bem-vindo!"
+          type: string
+        language:
+          description: Locale BCP 47
+          example: pt-BR
+          type: string
+      required:
+      - message
+      type: object
+    GreetingResponse:
+      example:
+        createdAt: 2000-01-23T04:56:07.000+00:00
+        language: language
+        message: message
+      properties:
+        message:
+          type: string
+        language:
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      type: object
+

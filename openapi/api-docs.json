@@ -1,0 +1,130 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Greeting Service",
+    "version": "1.0.0",
+    "description": "API de exemplo usada para demonstrar a geração de SDK/server stubs usando Java 21"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Instância local do Spring Boot"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Greetings",
+      "description": "Operações relacionadas a cumprimento"
+    }
+  ],
+  "paths": {
+    "/greetings/{name}": {
+      "get": {
+        "operationId": "getGreeting",
+        "tags": ["Greetings"],
+        "summary": "Recupera uma saudação personalizada",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "name",
+            "description": "Nome da pessoa",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "title",
+            "description": "Título opcional (Dr., Ms., etc)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Saudação calculada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GreetingResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado"
+          }
+        }
+      }
+    },
+    "/greetings": {
+      "post": {
+        "operationId": "createGreeting",
+        "tags": ["Greetings"],
+        "summary": "Persiste uma saudação customizada",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GreetingRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Saudação criada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GreetingResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GreetingRequest": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Olá, seja bem-vindo!"
+          },
+          "language": {
+            "type": "string",
+            "description": "Locale BCP 47",
+            "example": "pt-BR"
+          }
+        }
+      },
+      "GreetingResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "language": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  }
+}
