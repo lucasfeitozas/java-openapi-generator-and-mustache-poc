@@ -40,7 +40,7 @@ open-api-gen-poc
 
 ```mermaid
 flowchart TD
-    Spec[openapi/api-docs.json] --> Gen[OpenAPI Generator (Maven)]
+    Spec[openapi/api-docs.json] --> Gen[OpenAPI Generator - Maven]
     Gen --> Server[openapi-server\nInterfaces Spring + Mustache]
     Gen --> SDK[openapi-sdk\nRestTemplate Client]
     Server --> Boot[Spring Boot 3.3\n:8080]
